@@ -26,7 +26,7 @@ public:
 	void loadDataFromFile() {
 		string line;
 		int count = 0;
-		std::ifstream inFile(FileName); // окрываем файл для чтения
+		std::ifstream inFile(FileName); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
 		if (inFile.is_open())
 		{
 			bool isRecord = false;
@@ -70,8 +70,8 @@ public:
 							sn->department = value;
 						if (strcmp("group", valueName.c_str()) == 0)
 							sn->group = value;
-						if (strcmp("recordСardNumber", valueName.c_str()) == 0)
-							sn->recordСardNumber = value;
+						if (strcmp("recordРЎardNumber", valueName.c_str()) == 0)
+							sn->recordРЎardNumber = value;
 						if (strcmp("birthDateString", valueName.c_str()) == 0)
 							sn->birthDateString = value;
 						// ExamsRecords
@@ -93,12 +93,12 @@ public:
 								}
 							}
 					}
-					else // Тогда явно int но надо проверить
+					else // РўРѕРіРґР° СЏРІРЅРѕ int РЅРѕ РЅР°РґРѕ РїСЂРѕРІРµСЂРёС‚СЊ
 					{
 						int value = getValueInt(line);
 						if (strcmp("id", valueName.c_str()) == 0)
-							sn->id = studentId;  // сейчас здесь порядковый номер записи в файле
-						//должно быть value хорошо бы, но ладно;) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+							sn->id = studentId;  // СЃРµР№С‡Р°СЃ Р·РґРµСЃСЊ РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ Р·Р°РїРёСЃРё РІ С„Р°Р№Р»Рµ
+						//РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ value С…РѕСЂРѕС€Рѕ Р±С‹, РЅРѕ Р»Р°РґРЅРѕ;) !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 						if (strcmp("startYear", valueName.c_str()) == 0)
 							sn->startYear = value;
 						if (strcmp("sex", valueName.c_str()) == 0)
@@ -109,17 +109,17 @@ public:
 					}
 				}
 			}
-			inFile.close();     // закрываем файл
+			inFile.close();     // Р·Р°РєСЂС‹РІР°РµРј С„Р°Р№Р»
 		}
 		else {
-			cout << " \n Файл БД не найден \n";
+			cout << " \n Р¤Р°Р№Р» Р‘Р” РЅРµ РЅР°Р№РґРµРЅ \n";
 			_getch();
 		}
 		inFile.close();
 	}
 	void saveDataToFile(string inFileName) {
-		std::ofstream outFile;          // поток для записи
-		ifstream iff(inFileName); //если файл есть удаляем
+		std::ofstream outFile;          // РїРѕС‚РѕРє РґР»СЏ Р·Р°РїРёСЃРё
+		ifstream iff(inFileName); //РµСЃР»Рё С„Р°Р№Р» РµСЃС‚СЊ СѓРґР°Р»СЏРµРј
 		if (iff.bad() == false)
 		{
 			iff.close();
@@ -129,8 +129,8 @@ public:
 			}
 
 		}
-		outFile.open(inFileName, std::ios::app); // окрываем файл для записи
-		// outFile.open(FileName, std::ios::app); // окрываем файл для записи
+		outFile.open(inFileName, std::ios::app); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё
+		// outFile.open(FileName, std::ios::app); // РѕРєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ Р·Р°РїРёСЃРё
 		if (outFile.is_open())
 		{
 			StudentClass st = StudentClass();
@@ -160,12 +160,12 @@ public:
 		tNode->faculty = st->faculty;
 		tNode->department = st->department;
 		tNode->group = st->group;
-		tNode->recordСardNumber = st->recordСardNumber;
+		tNode->recordРЎardNumber = st->recordРЎardNumber;
 		tNode->sex = st->sex;
 		tNode->startYear = st->startYear;
 		tNode->birthDateString = st->birthDateString;
 		tNode->avrMarks = st->avrMarks; ///!!!!
-		// //по аналогии
+		// //РїРѕ Р°РЅР°Р»РѕРіРёРё
 		//ExamsRecords data[9][10];
 		for (int i = 0; i < 9; i++)
 			for (int j = 0; j < 10; j++) {
@@ -264,13 +264,13 @@ public:
 		}
 		count--;
 	};
-	int getSameRecordСardNumber(string inString) {
+	int getSameRecordРЎardNumber(string inString) {
 		StudentNode* curr = NULL;
 		curr = head;
 		int count = 0;
 		while (curr) {
 			//cout << curr->surName << endl;
-			if (strcmp(inString.c_str(), curr->recordСardNumber.c_str()) == 0) {
+			if (strcmp(inString.c_str(), curr->recordРЎardNumber.c_str()) == 0) {
 				count++;
 			}
 			curr = curr->next;
@@ -284,6 +284,7 @@ public:
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
+
 		while (curr) {
 			curr->avrMarks = stud->getAvrMarks(curr);
 			curr = curr->next;
@@ -292,21 +293,32 @@ public:
 	}
 	void updateAvrMarks1() {
 		StudentNode* curr = NULL;
+		StudentNode* sn = new StudentNode();
 		StudentClass* stud = new StudentClass();
 		curr = head;
-		while (curr) {
-			curr->avrMarks = stud->getAvrMarks1(curr);
-			curr = curr->next;
+		for (int i = 0; i < 1; i++) {
+			for (int j = 0; j < 10; j++)
+				if (sn->examsRecordsData[i][j].isEmpty == false)
+					while (curr) {
+						curr->avrMarks = stud->getAvrMarks1(curr);
+						curr = curr->next;
+					}
 		}
+	
 		delete stud;
 	}
 	void updateAvrMarks2() {
 		StudentNode* curr = NULL;
+		StudentNode* sn = new StudentNode();
 		StudentClass* stud = new StudentClass();
 		curr = head;
-		while (curr) {
-			curr->avrMarks = stud->getAvrMarks2(curr);
-			curr = curr->next;
+		for (int i = 1; i < 2; i++) {
+			for (int j = 0; j < 10; j++)
+				if (sn->examsRecordsData[i][j].isEmpty == false)
+					while (curr) {
+						curr->avrMarks = stud->getAvrMarks2(curr);
+						curr = curr->next;
+					}
 		}
 		delete stud;
 	}
@@ -381,7 +393,7 @@ public:
 		delete stud;
 	}
 
-	void printAllSurName_Name_MName_bYaear_avrMarks1() {//выводит всех студентов
+	void printAllSurName_Name_MName_bYaear_avrMarks() {//РІС‹РІРѕРґРёС‚ РІСЃРµС… СЃС‚СѓРґРµРЅС‚РѕРІ
 		StudentNode* curr = NULL;
 		StringBuilderClass* sb = new StringBuilderClass();
 		curr = head;
@@ -392,7 +404,7 @@ public:
 		delete sb;
 	}
 
-	void printAllSurName_Name_MName_bYaear_avrMarks() {//выводит уже сортировкy по оценке
+	void printAllSurName_Name_MName_bYaear_avrMarks1() {//РІС‹РІРѕРґРёС‚ СѓР¶Рµ СЃРѕСЂС‚РёСЂРѕРІРєy РїРѕ РѕС†РµРЅРєРµ
 		StudentNode* curr = NULL;
 		StringBuilderClass* sb = new StringBuilderClass();
 		curr = head;
@@ -403,7 +415,7 @@ public:
 		delete sb;
 	}
 
-	double getMaxAvrMarks() {//сама сортировка
+	double getMaxAvrMarks() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 
 		StudentNode* curr = NULL;
 		curr = head;
@@ -416,7 +428,7 @@ public:
 		}
 		return max;
 	}
-	double getMaxAvrMarks1() {//сама сортировка
+	double getMaxAvrMarks1() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 
 		StudentNode* curr = NULL;
 		curr = head;
@@ -429,20 +441,23 @@ public:
 		}
 		return max;
 	}
-	double getMaxAvrMarks2() {//сама сортировка
+	double getMaxAvrMarks2() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
-		int max = 0, i = 1;
-
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
+		int max = 0;
+		StudentNode* sn = new StudentNode();
+		for (int i = 1; i < 2; i++) {
+			for (int j = 0; j < 10; j++)
+				if (sn->examsRecordsData[i][j].isEmpty == false)
+					while (curr) {
+						if (max < curr->avrMarks)
+							max = curr->avrMarks;
+						curr = curr->next;
+					}
 		}
 		return max;
-
 	}
-	double getMaxAvrMarks3() {//сама сортировка
+	double getMaxAvrMarks3() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 2;
@@ -454,7 +469,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks4() {//сама сортировка
+	double getMaxAvrMarks4() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 3;
@@ -466,7 +481,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks5() {//сама сортировка
+	double getMaxAvrMarks5() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 4;
@@ -478,7 +493,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks6() {//сама сортировка
+	double getMaxAvrMarks6() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 5;
@@ -490,7 +505,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks7() {//сама сортировка
+	double getMaxAvrMarks7() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 6;
@@ -502,7 +517,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks8() {//сама сортировка
+	double getMaxAvrMarks8() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 7;
@@ -514,7 +529,7 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks9() {//сама сортировка
+	double getMaxAvrMarks9() {//СЃР°РјР° СЃРѕСЂС‚РёСЂРѕРІРєР°
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0, i = 8;
@@ -587,24 +602,30 @@ public:
 		curr = head;
 		int max = 0;
 		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks2();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
+		StudentNode* sn = new StudentNode();
+		for (int i = 1; i < 2; i++) {
+			for (int j = 0; j < 10; j++)
+				if (sn->examsRecordsData[i][j].isEmpty == false)
+					while (count > 1) {
+						curr = head;
+						max = getMaxAvrMarks2();
+						int cCount = 0;
+						while (curr) {
+							if (curr->avrMarks == max)
+							{
+								sdbT->Add(curr);
+								delRecord(cCount);
+								break;
+							}
+							curr = curr->next;
+							cCount++;
+						}
+
+					}
+			while (sdbT->getCount() > 0) {
+				Add(sdbT->getStudentNode(0));
+				sdbT->delRecord(0);
 			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
 		}
 		delete sdbT;
 	}
