@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "StringBuilderClass.h"
 #include "FileManagerClass.h"
 #include "ClassMenu.h"
@@ -127,7 +127,7 @@ int main()
             sdb->updateAvrMarks();
             system("cls");
             cout << "Полный список студентов" << endl;
-            sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+            sdb->printAllSurName_Name_MName_bYaear_avrMarks();
             sdb->sortByAvrMarks();//выводит всех студентов неважно как
             cout << "Введите за какую сессию вывести студентов" << endl;
             cin >> l;
@@ -136,7 +136,7 @@ int main()
             case 11:
                 sdb->sortByAvrMarks1();
                 cout << "Отсортированный список студентов за первую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
@@ -144,15 +144,15 @@ int main()
             case 12:
                 sdb->sortByAvrMarks2();
                 cout << "Отсортированный список студентов за вторую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
-                sn = sdb->getInit();
-                sdb1->Erase();
-                sdb2->Erase();
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+                //sn = sdb->getInit();
+               // sdb1->Erase();
+               // sdb2->Erase();
                 break;
             case 13:
                 sdb->sortByAvrMarks3();
                 cout << "Отсортированный список студентов за третью сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
@@ -160,7 +160,7 @@ int main()
             case 14:
                 sdb->sortByAvrMarks4();
                 cout << "Отсортированный список студентов за четвёртую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
@@ -168,7 +168,7 @@ int main()
             case 15:
                 sdb->sortByAvrMarks5();
                 cout << "Отсортированный список студентов за пятую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
