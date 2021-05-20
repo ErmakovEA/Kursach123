@@ -33,7 +33,7 @@ public:
 			StudentNode* sn = new StudentNode();
 			for (int i = 0; i < 9; i++)
 				for (int j = 0; j < 10; j++)
-					sn->examsRecordsData[i][j].isEmpty = true;
+					sn->examsRecordsData[i][j].isEmpty = true;  
 			int studentId = 0;
 			while (getline(inFile, line))
 			{
@@ -111,7 +111,7 @@ public:
 			}
 			inFile.close();     // закрываем файл
 		}
-		else {
+		else{
 			cout << " \n Файл БД не найден \n";
 			_getch();
 		}
@@ -120,24 +120,24 @@ public:
 	void saveDataToFile(string inFileName) {
 		std::ofstream outFile;          // поток для записи
 		ifstream iff(inFileName); //если файл есть удаляем
-		if (iff.bad() == false)
+		if (iff.bad() == false) 
 		{
 			iff.close();
 			if (remove(inFileName.c_str())) {
 				printf("Error removing file");
 				_getch();
 			}
-
+			
 		}
-		outFile.open(inFileName, std::ios::app); // окрываем файл для записи
+        outFile.open(inFileName, std::ios::app); // окрываем файл для записи
 		// outFile.open(FileName, std::ios::app); // окрываем файл для записи
-		if (outFile.is_open())
-		{
-			StudentClass st = StudentClass();
+        if (outFile.is_open())
+        {
+            StudentClass st = StudentClass();
 			int recordsCount = GetRecordCountOfList();
 			StudentNode* sn;
-			for (int i = 0; i < recordsCount; i++) {
-				//st.addRusakov();
+			for (int i = 0; i < recordsCount;i++) {
+            //st.addRusakov();
 				outFile << startRecordString << std::endl;
 				sn = getStudentNode(i);
 				st.UpdateMasString(sn);
@@ -149,9 +149,9 @@ public:
 				}
 				outFile << endRecordString << std::endl;
 			}
-
-		}
-		outFile.close();
+            
+        }
+        outFile.close();
 	}
 	void setData(StudentNode* tNode, StudentNode* st) {
 		tNode->surName = st->surName;
@@ -167,7 +167,7 @@ public:
 		tNode->avrMarks = st->avrMarks; ///!!!!
 		// //по аналогии
 		//ExamsRecords data[9][10];
-		for (int i = 0; i < 9; i++)
+		for(int i=0;i<9;i++)
 			for (int j = 0; j < 10; j++) {
 				tNode->examsRecordsData[i][j].isEmpty = st->examsRecordsData[i][j].isEmpty;
 				tNode->examsRecordsData[i][j].name = st->examsRecordsData[i][j].name;
@@ -175,7 +175,7 @@ public:
 			}
 		//tNode->isNULL = false;
 	}
-	bool Add(StudentNode* st) {
+	bool Add(StudentNode *st) {
 		if (!head)
 		{
 			head = new StudentNode();
@@ -233,36 +233,36 @@ public:
 		return count;
 	};
 	void delRecord(int num) {
-		StudentNode* curr = NULL;
-		curr = head;
-		if (num == 0) {
-			if (head->next == NULL) {
-				delete(head);
-			}
-			else {
-				head = head->next;
-				delete(curr);
-			}
-		}
-		else {
-			int cCount = 0;
-			while (curr) {
-				if (cCount == num - 1) {  ///!!!!!!!!!!!!!!!111111
-					StudentNode* tmp;
-					tmp = curr->next;
-					if (curr->next->next == NULL) {
-						curr->next = NULL;
+				StudentNode* curr = NULL;
+				curr = head;
+				if (num == 0) {
+					if (head->next == NULL) {
+						delete(head);
 					}
-					else
-						curr->next = curr->next->next;
-					delete(tmp);
+					else {
+						head = head->next;
+						delete(curr);
+					}
 				}
-				else
-					curr = curr->next;
-				cCount++;
-			}
-		}
-		count--;
+				else {
+					int cCount = 0;
+					while (curr) {
+						if (cCount == num-1) {  ///!!!!!!!!!!!!!!!111111
+							StudentNode* tmp;
+							tmp = curr->next;
+							if (curr->next->next == NULL) {
+								curr->next = NULL;
+							}
+							else
+								curr->next = curr->next->next;
+							delete(tmp);
+						}
+						else
+							curr = curr->next;
+						cCount++;
+					}
+				}
+				count--;
 	};
 	int getSameRecordСardNumber(string inString) {
 		StudentNode* curr = NULL;
@@ -277,48 +277,26 @@ public:
 		}
 		return count;
 	}
-
-
-
-	void updateAvrMarks() {
+	
+	
+	
+	void updateAvrMarks1() {
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
-
 		while (curr) {
-			curr->avrMarks = stud->getAvrMarks(curr);
+			curr->avrMarks = stud->getAvrMarks1(curr);
 			curr = curr->next;
 		}
 		delete stud;
 	}
-	void updateAvrMarks1() {
-		StudentNode* curr = NULL;
-		StudentNode* sn = new StudentNode();
-		StudentClass* stud = new StudentClass();
-		curr = head;
-		for (int i = 0; i < 1; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false)
-					while (curr) {
-						curr->avrMarks = stud->getAvrMarks1(curr);
-						curr = curr->next;
-					}
-		}
-	
-		delete stud;
-	}
 	void updateAvrMarks2() {
 		StudentNode* curr = NULL;
-		StudentNode* sn = new StudentNode();
 		StudentClass* stud = new StudentClass();
 		curr = head;
-		for (int i = 1; i < 2; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false)
-					while (curr) {
-						curr->avrMarks = stud->getAvrMarks2(curr);
-						curr = curr->next;
-					}
+		while (curr) {
+			curr->avrMarks = stud->getAvrMarks2(curr);
+			curr = curr->next;
 		}
 		delete stud;
 	}
@@ -331,8 +309,7 @@ public:
 			curr = curr->next;
 		}
 		delete stud;
-	}
-	void updateAvrMarks4() {
+	}void updateAvrMarks4() {
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
@@ -341,8 +318,7 @@ public:
 			curr = curr->next;
 		}
 		delete stud;
-	}
-	void updateAvrMarks5() {
+	}void updateAvrMarks5() {
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
@@ -351,8 +327,7 @@ public:
 			curr = curr->next;
 		}
 		delete stud;
-	}
-	void updateAvrMarks6() {
+	}void updateAvrMarks6() {
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
@@ -361,8 +336,7 @@ public:
 			curr = curr->next;
 		}
 		delete stud;
-	}
-	void updateAvrMarks7() {
+	}void updateAvrMarks7() {
 		StudentNode* curr = NULL;
 		StudentClass* stud = new StudentClass();
 		curr = head;
@@ -392,75 +366,28 @@ public:
 		}
 		delete stud;
 	}
-
-	void printAllSurName_Name_MName_bYaear_avrMarks() {//выводит всех студентов
+	
+	
+	
+	
+	
+	
+	
+	void printAllSurName_Name_MName_bYaear_avrMarks() {
 		StudentNode* curr = NULL;
 		StringBuilderClass* sb = new StringBuilderClass();
 		curr = head;
 		while (curr) {
-			cout << curr->surName + " " + curr->name + " " + curr->middleName + " " + " " << endl;
+			cout << curr->surName + " " + curr->name + " " + curr->middleName +  " " + std::to_string(curr->avrMarks) << endl;
 			curr = curr->next;
 		}
 		delete sb;
 	}
 
-	void printAllSurName_Name_MName_bYaear_avrMarks1() {//выводит уже сортировкy по оценке
-		StudentNode* curr = NULL;
-		StringBuilderClass* sb = new StringBuilderClass();
-		curr = head;
-		while (curr) {
-			cout << curr->surName + " " + curr->name + " " + curr->middleName + " " + " " + to_string(curr->avrMarks) << endl;
-			curr = curr->next;
-		}
-		delete sb;
-	}
-
-	double getMaxAvrMarks() {//сама сортировка
-
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 0;
-
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-	}
-	double getMaxAvrMarks1() {//сама сортировка
-
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 0;
-
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-	}
-	double getMaxAvrMarks2() {//сама сортировка
+	double getMaxAvrMarks() {
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0;
-		StudentNode* sn = new StudentNode();
-		for (int i = 1; i < 2; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false)
-					while (curr) {
-						if (max < curr->avrMarks)
-							max = curr->avrMarks;
-						curr = curr->next;
-					}
-		}
-		return max;
-	}
-	double getMaxAvrMarks3() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 2;
 		while (curr) {
 			if (max < curr->avrMarks)
 				max = curr->avrMarks;
@@ -469,86 +396,12 @@ public:
 		return max;
 
 	}
-	double getMaxAvrMarks4() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 3;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-	double getMaxAvrMarks5() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 4;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-	double getMaxAvrMarks6() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 5;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-	double getMaxAvrMarks7() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 6;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-	double getMaxAvrMarks8() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 7;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-	double getMaxAvrMarks9() {//сама сортировка
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0, i = 8;
-		while (curr) {
-			if (max < curr->avrMarks)
-				max = curr->avrMarks;
-			curr = curr->next;
-		}
-		return max;
-
-	}
-
-
 	void sortByAvrMarks() {
 		StudentNode* curr = NULL;
 		curr = head;
 		int max = 0;
 		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
+		while (count > 1){
 			curr = head;
 			max = getMaxAvrMarks();
 			int cCount = 0;
@@ -562,253 +415,19 @@ public:
 				curr = curr->next;
 				cCount++;
 			}
+		}
+		//sdbT->Add(getStudentNode(0));
+		//delRecord(0);
+		while (sdbT->getCount() > 0) {
+			Add(sdbT->getStudentNode(0));
+			sdbT->delRecord(0);
+		}
+		delete sdbT;
+	}
 
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks1() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks1();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
 
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks2() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		StudentNode* sn = new StudentNode();
-		for (int i = 1; i < 2; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false)
-					while (count > 1) {
-						curr = head;
-						max = getMaxAvrMarks2();
-						int cCount = 0;
-						while (curr) {
-							if (curr->avrMarks == max)
-							{
-								sdbT->Add(curr);
-								delRecord(cCount);
-								break;
-							}
-							curr = curr->next;
-							cCount++;
-						}
 
-					}
-			while (sdbT->getCount() > 0) {
-				Add(sdbT->getStudentNode(0));
-				sdbT->delRecord(0);
-			}
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks3() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks3();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks4() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks4();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks5() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks5();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks6() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks6();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks7() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks7();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks8() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks8();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
-	void sortByAvrMarks9() {
-		StudentNode* curr = NULL;
-		curr = head;
-		int max = 0;
-		StudentDBClass* sdbT = new StudentDBClass();
-		while (count > 1) {
-			curr = head;
-			max = getMaxAvrMarks9();
-			int cCount = 0;
-			while (curr) {
-				if (curr->avrMarks == max)
-				{
-					sdbT->Add(curr);
-					delRecord(cCount);
-					break;
-				}
-				curr = curr->next;
-				cCount++;
-			}
-		}
-		while (sdbT->getCount() > 0) {
-			Add(sdbT->getStudentNode(0));
-			sdbT->delRecord(0);
-		}
-		delete sdbT;
-	}
+
 };
+
+
