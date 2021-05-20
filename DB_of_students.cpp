@@ -12,9 +12,10 @@ int main()
     SetConsoleCP(1251); // Ввод с консоли в кодировке 1251
     SetConsoleOutputCP(1251);
     std::cout << "Курсовая работа запущена...\n";
-    StudentDBClass* sdb = new StudentDBClass();
+    StudentDBClass* sdb = new StudentDBClass();    
     StudentDBClass* sdb1 = new StudentDBClass();
     StudentDBClass* sdb2 = new StudentDBClass();
+    int l = 0;
     sdb->FileName = "DB.txt";
     sdb->loadDataFromFile();
     //cout << sdb->GetRecordCount() << endl;
@@ -74,7 +75,7 @@ int main()
                         delStudentsMenu->addItem(tmpString); //добавить в меню студентов
                         sn = sn->next;
                     }
-                    while (resultDel != exitDel) {
+                    while (resultDel != exitDel){
                         delStudentsMenu->run();
                         resultDel = delStudentsMenu->getSelectedItem();
                         //if (resultDel == exitDel) {
@@ -84,15 +85,15 @@ int main()
                         //sdb->delRecord();
                     }
                 }
-                if (resultStudentSelectedItem > 1)
+                if (resultStudentSelectedItem>1)
                 {
                     int num = resultStudentSelectedItem - 2; //!
-                    sn = sdb->getStudentNode(num);
+                    sn = sdb->getStudentNode(num);   
                     string oldRecordСardNumber = "";
                     oldRecordСardNumber = sn->recordСardNumber;
                     st->editStudent(sn);
 
-                    if (sdb->getSameRecordСardNumber(sn->recordСardNumber) > 1)
+                    if (sdb->getSameRecordСardNumber(sn->recordСardNumber)>1)
                     {
                         sn->recordСardNumber = oldRecordСardNumber;
                         cout << "Ошибка введен номер зачетной книжки который уже есть в БД";
@@ -108,7 +109,7 @@ int main()
                 for (int j = 0; j < 10; j++)
                     sn->examsRecordsData[i][j].isEmpty = true;
             st->editStudent(sn);
-            if (sdb->getSameRecordСardNumber(sn->recordСardNumber) == 1)
+            if (sdb->getSameRecordСardNumber(sn->recordСardNumber)==1)
             {
                 cout << "Ошибка введен номер зачетной книжки который уже есть в БД";
                 _getch();
@@ -117,97 +118,124 @@ int main()
             {
                 sdb->Add(sn);
             }
-            break;
+            break;        
         case 2: //Сохранить в файл
             sdb->saveDataToFile(sdb->FileName);
             //sdb->saveDataToFile("d:\\db1.txt");
             break;
-        case 3: //Вариант 20
-            int l;
-            sdb->updateAvrMarks();
+        case 3://Вариант 20
+            //sdb->updateAvrMarks();
             system("cls");
-            cout << "Полный список студентов" << endl;
+            /*cout << "Полный список студентов" << endl;
+            //sdb->delRecord(2);
             sdb->printAllSurName_Name_MName_bYaear_avrMarks();
-            sdb->sortByAvrMarks();//выводит всех студентов неважно как
-            cout << "Введите за какую сессию вывести студентов" << endl;
+            sdb->sortByAvrMarks();*/
+            cout << "Введите за какой семестр выводить студентов: " << endl;
             cin >> l;
             l = l + 10;
-            switch (l) {
+            switch(l){
             case 11:
-                sdb->sortByAvrMarks1();
-                cout << "Отсортированный список студентов за первую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+                sdb->updateAvrMarks1();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 12:
-                sdb->sortByAvrMarks2();
-                cout << "Отсортированный список студентов за вторую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
-                //sn = sdb->getInit();
-               // sdb1->Erase();
-               // sdb2->Erase();
+                sdb->updateAvrMarks2();
+                cout << endl << "Полный список студентов: " << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sn = sdb->getInit();
+                sdb1->Erase();
+                sdb2->Erase();
                 break;
             case 13:
-                sdb->sortByAvrMarks3();
-                cout << "Отсортированный список студентов за третью сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+                sdb->updateAvrMarks3();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 14:
-                sdb->sortByAvrMarks4();
-                cout << "Отсортированный список студентов за четвёртую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+                sdb->updateAvrMarks4();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 15:
-                sdb->sortByAvrMarks5();
-                cout << "Отсортированный список студентов за пятую сессию" << endl;
-                sdb->printAllSurName_Name_MName_bYaear_avrMarks1();
+                sdb->updateAvrMarks5();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 16:
-                sdb->sortByAvrMarks6();
-                cout << "Отсортированный список студентов за шестую сессию" << endl;
+                sdb->updateAvrMarks6();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
                 sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 17:
-                sdb->sortByAvrMarks7();
-                cout << "Отсортированный список студентов за седьмую сессию" << endl;
+                sdb->updateAvrMarks7();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
                 sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 18:
-                sdb->sortByAvrMarks8();
-                cout << "Отсортированный список студентов за восьмую сессию" << endl;
+                sdb->updateAvrMarks8();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
                 sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
             case 19:
-                sdb->sortByAvrMarks9();
-                cout << "Отсортированный список студентов за девятую сессию" << endl;
+                sdb->updateAvrMarks9();
+                cout << "Полный список студентов" << endl;
+                sdb->printAllSurName_Name_MName_bYaear_avrMarks();
+                sdb->sortByAvrMarks();
+                cout << endl << "Отсортированный список студентов" << endl;
                 sdb->printAllSurName_Name_MName_bYaear_avrMarks();
                 sn = sdb->getInit();
                 sdb1->Erase();
                 sdb2->Erase();
                 break;
-            }
 
-            _getch();
+
+            }
             break;
         case 4://Выход
             resultSelectedItem = exitInt;
@@ -217,6 +245,6 @@ int main()
         }
     }
     //_getch();
-
+    
 }
 
