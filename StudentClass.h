@@ -22,7 +22,7 @@ struct StudentNode
 			  // false - девочка
 	int startYear;
 
-	ExamsRecords examsRecordsData[9][10];
+	ExamsRecords examsRecordsData[9][10];  
 	StudentNode* next;
 	int id;
 	double avrMarks;
@@ -31,16 +31,16 @@ struct StudentNode
 class StudentClass
 {
 private:
-	StudentNode* sn;
+	StudentNode *sn;
 	StringMasClass stringMas;
 public:
-	StudentClass() {
-		sn = new StudentNode();
-		addRusakov();
+	 StudentClass() {
+		 sn = new StudentNode();
+		 addRusakov();
 	}
-	StudentNode* getStudentNode() {
-		return sn;
-	}
+	 StudentNode* getStudentNode() {
+		 return sn;
+	 }
 
 	void addRusakov() {
 		sn->id = 0;
@@ -61,7 +61,7 @@ public:
 		er->add(1, "Яыки программирования 2", 5);
 		er->add(1, "Математика 2", 5);
 		er->add(1, "Физкультура 2", true);
-		setExamsResultsData(er, sn);
+		setExamsResultsData(er,sn);
 	}
 	void setExamsResultsData(ExamsResultsClass* er, StudentNode* sn) {
 		for (int i = 0; i < 9; i++)
@@ -91,9 +91,9 @@ public:
 		stringMas.Add(sb.setParam("birthDateString", sn->birthDateString)); //27.12.1984
 		int sem = 0;
 		int num = 0;
-		for (int sem = 0; sem < 9; sem++)
-			for (int num = 0; num < 10; num++)
-				if (not sn->examsRecordsData[sem][num].isEmpty) {
+		for (int sem=0;sem<9;sem++)
+			for (int num=0;num<10;num++)
+				if (not sn->examsRecordsData[sem][num].isEmpty ){
 					//examsResults_sem_num_n - название экзамена или зачета
 					stringMas.Add(sb.setParam("examsResults_" + std::to_string(sem) + "_" + std::to_string(num) + "_n", sn->examsRecordsData[sem][num].name));
 					//examsResults_sem_num_m - оценка
@@ -131,7 +131,7 @@ public:
 			}
 		}
 	}
-	void editStudent(StudentNode* sn)
+	void editStudent(StudentNode *sn)
 	{
 		ClassMenu* studDataMenu = new ClassMenu();
 		int resultStudDataMenu = 1;
@@ -209,7 +209,7 @@ public:
 				startYear = ce->setDataInt(1900, 2021);
 				tmpString = sb->split(sn->birthDateString.c_str(), '.', 3);
 				year = atoi(tmpString.c_str());
-				if (year == 0)
+				if  (year==0)
 					sn->startYear = startYear;
 				else
 				{
@@ -221,7 +221,7 @@ public:
 						cout << "Ошибка год поступления в институт должен быть на 15 лет больше чем год рождения";
 						_getch();
 					}
-				}
+				} 
 
 				break;
 			case 10:
@@ -254,9 +254,9 @@ public:
 						oldExamsRecordsData[i][j].isEmpty = sn->examsRecordsData[i][j].isEmpty;
 						oldExamsRecordsData[i][j].mark = sn->examsRecordsData[i][j].mark;
 					}
-
+						
 				editExamsResults(sn); // "Ошибка есть одинаковые названия предметов"
-				if (isSameNameExamsResults(sn)) {
+				if (isSameNameExamsResults(sn)){ 
 					cout << "Ошибка есть одинаковые названия предметов";
 					for (int i = 0; i < 9; i++)
 						for (int j = 0; j < 10; j++) {
@@ -283,8 +283,8 @@ public:
 		ClassEdit* ce = new  ClassEdit();
 		ExamsResultsClass* erc = new ExamsResultsClass();
 		sesMenu->addItem("Выход");   //0
-		for (int i = 1; i < 10; i++) {
-			sesMenu->addItem("Сессия " + std::to_string(i));
+		for(int i=1;i<10;i++){
+		sesMenu->addItem("Сессия "+std::to_string(i));
 		}
 		while (result != exit) {
 			sesMenu->eraseTitle();
@@ -302,7 +302,7 @@ public:
 				//рисуем меню и правим оценки про сессию
 				msMenu->eraseAll();
 				msMenu->addTitleItem("Просмотр/изменение/добавление данных о оценках");
-				msMenu->addTitleItem("Данные сессии №" + to_string(curSess));
+				msMenu->addTitleItem("Данные сессии №" + std::to_string(curSess));
 				resultS = 1;
 				while (resultS != exitS) {
 					msMenu->eraseItem();
@@ -317,7 +317,7 @@ public:
 							if (markInt == 0) markString = "не зачтено";
 							if (markInt == 1) markString = "зачтено";
 							if ((markInt >= 2) and (markInt <= 5)) {
-								markString = to_string(markInt);
+								markString = std::to_string(markInt);
 							}
 							msMenu->addItem("Предмет: " + sn->examsRecordsData[curSess - 1][i].name + " Оценка: " + markString);
 						}
@@ -335,7 +335,7 @@ public:
 						}
 						else {
 							addExamsResults(sn, curSess, itemNum);
-						}
+						}	
 					}
 					if (resultS == 2) {
 						//Удалить запись
@@ -352,12 +352,12 @@ public:
 	void addExamsResults(StudentNode* sn, int curSess, int curItem) {
 		ClassEdit* ce = new  ClassEdit();
 		ce->setLabel("Введите название предмета. ");
-		sn->examsRecordsData[curSess - 1][curItem].name = ce->setDataString(sn->examsRecordsData[curSess - 1][curItem].name);
+		sn->examsRecordsData[curSess - 1][curItem].name=ce->setDataString(sn->examsRecordsData[curSess - 1][curItem].name);
 		int resultS = 1;
 		const int exitS = 0;
 		ClassMenu* msMenu = new ClassMenu();
 		msMenu->addTitleItem("Выберите оценку");
-		msMenu->addItem("не зачтено"); //0
+		msMenu->addItem( "не зачтено"); //0
 		msMenu->addItem("зачтено"); //1
 		msMenu->addItem("2"); //2	
 		msMenu->addItem("3"); //3		
@@ -374,7 +374,7 @@ public:
 			resultS = exitS;
 		}
 		sn->examsRecordsData[curSess - 1][curItem].isEmpty = false;
-	}
+	}	
 	void delExamsResults(StudentNode* sn, int curSess) {
 		ClassEdit* ce = new  ClassEdit();
 		int resultS = 1;
@@ -403,17 +403,17 @@ public:
 				resultS == exitS;
 			else
 			{
-				sn->examsRecordsData[curSess - 1][resultS - 1].isEmpty = true;
+				sn->examsRecordsData[curSess - 1][resultS-1].isEmpty = true;
 				//Дефрагментация массива
 				ExamsResultsClass* er = new ExamsResultsClass();
 				for (int i = 0; i < 10; i++)
 					if (not sn->examsRecordsData[curSess - 1][i].isEmpty)
 						er->add(0, sn->examsRecordsData[curSess - 1][i].name, sn->examsRecordsData[curSess - 1][i].mark);
-				//er->add(0, "Яыки программирования 1", 5);
+						//er->add(0, "Яыки программирования 1", 5);
 				for (int i = 0; i < 10; i++)
 					sn->examsRecordsData[curSess - 1][i].isEmpty = true;
 				for (int i = 0; i < 10; i++)
-					if (not er->data[0][i].isEmpty) {
+					if (not er->data[0][i].isEmpty){
 						sn->examsRecordsData[curSess - 1][i].isEmpty = false;
 						sn->examsRecordsData[curSess - 1][i].name = er->data[0][i].name;
 						sn->examsRecordsData[curSess - 1][i].mark = er->data[0][i].mark;
@@ -421,8 +421,8 @@ public:
 			}
 		}
 	}
-	bool isSameNameExamsResults(StudentNode* sn) {
-		for (int curSess = 0; curSess < 9; curSess++) {
+	bool isSameNameExamsResults(StudentNode* sn){
+		for(int curSess = 0; curSess < 9; curSess++) {
 			for (int i = 0; i < 10; i++)
 				for (int j = 0; j < 10; j++)
 					if (sn->examsRecordsData[curSess][i].isEmpty == false and sn->examsRecordsData[curSess][j].isEmpty == false and i != j)
@@ -431,155 +431,131 @@ public:
 		}
 		return false;
 	}
+	
+	
+	double getAvrMarks1(StudentNode* sn) {//1 семестр
+		double sum = 0;
+		double count = 0;
+		int avr = 0;
+			for (int j = 0; j < 10; j++)
+				if (sn->examsRecordsData[0][j].isEmpty == false) {
+					sum = sum + sn->examsRecordsData[0][j].mark;
+					count++;
+				}
+		if (count > 0)
+			avr=sum / count;
+		return avr;
+	}
+	double getAvrMarks2(StudentNode* sn) {//2 семестр
+		double sum = 0;
+		double count = 0;
 
-	double getAvrMarks(StudentNode* sn) {
-		double sum = 0;
-		double count = 0;
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[1][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[1][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks1(StudentNode* sn) {
+	double getAvrMarks3(StudentNode* sn) {//3 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 0; i < 1; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[2][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[2][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks2(StudentNode* sn) {
+	double getAvrMarks4(StudentNode* sn) {//4 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 1; i < 2; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[3][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[3][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks3(StudentNode* sn) {
+	double getAvrMarks5(StudentNode* sn) {//5 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 2; i < 3; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[4][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[4][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks4(StudentNode* sn) {
+	double getAvrMarks6(StudentNode* sn) {//6 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 3; i < 4; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[5][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[5][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks5(StudentNode* sn) {
+	double getAvrMarks7(StudentNode* sn) {//7 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 4; i < 5; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[6][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[6][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks6(StudentNode* sn) {
+	double getAvrMarks8(StudentNode* sn) {//8 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 5; i < 6; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[7][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[7][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
-	double getAvrMarks7(StudentNode* sn) {
+	double getAvrMarks9(StudentNode* sn) {//9 семестр
 		double sum = 0;
 		double count = 0;
-		for (int i = 6; i < 7; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
-	}
-	double getAvrMarks8(StudentNode* sn) {
-		double sum = 0;
-		double count = 0;
-		for (int i = 7; i < 8; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
-	}
-	double getAvrMarks9(StudentNode* sn) {
-		double sum = 0;
-		double count = 0;
-		for (int i = 8; i < 9; i++) {
-			for (int j = 0; j < 10; j++)
-				if (sn->examsRecordsData[i][j].isEmpty == false) {
-					sum = sum + sn->examsRecordsData[i][j].mark;
-					count++;
-				}
-			int avr = 0;
-			if (count > 0)
-				avr = sum / count;
-			return avr;
-		}
+
+		for (int j = 0; j < 10; j++)
+			if (sn->examsRecordsData[8][j].isEmpty == false) {
+				sum = sum + sn->examsRecordsData[8][j].mark;
+				count++;
+			}
+		int avr = 0;
+		if (count > 0)
+			avr = sum / count;
+		return avr;
 	}
 };
